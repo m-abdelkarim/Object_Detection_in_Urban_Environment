@@ -158,3 +158,54 @@ This section should detail the results of the reference experiment. It should in
 
 #### Improve on the reference
 This section should highlight the different strategies you adopted to improve your model. It should contain relevant figures and details of your findings.
+```
+
+### Data Analysis
+In the notebook [Exploratory Data Analysis](Exploratory&#32;Data&#32;Analysis.ipynb), The function display_images is implemented. The file plot the given batch in subplots with the given shape and figure size. The generated sub-plot is saved to a png file with the given file name. The bounding boxes are plotted with class dependent color.
+
+Sample frames with ground truth bounding boxes for the training dataset:
+
+![](image_export/training_samples.png)
+
+Sample frames with ground truth bounding boxes for the validation dataset:
+
+![](image_export/validation_samples.png)
+
+Sample frames with ground truth bounding boxes for the validation dataset. The ground truth bounding boxes in the provided test data seem to have scaling issues. That is the root cause of missing boxes. That is not a real issue in our use case, as these frames are only used for video creation.
+![](image_export/test_samples.png)
+
+The distribution of a random subset of the given training, validation and data set is shown in the following. As shown, the class distribution is significantly imbalanced. 
+
+Proposals to enhance the balance of object classes:
+* Collect more recordings from cities with more dense cyclist and pedestrians (ex: Amsterdam, Bangalore, ).
+* Augment the frames with dense pedestrians and cyclist more, so that we have more variants of these frames.
+* Work more with synthetic data. 
+
+Subset of the training dataset:
+
+![](image_export/train_class_histogram.png)
+
+Subset of the validation dataset:
+
+![](image_export/val_class_histogram.png)
+
+Subset of the testing dataset:
+
+![](image_export/test_class_histogram.png)
+
+### Data Augmentation
+
+To ensure less over-fitting the The Following augmentations are included with their default values.
+* RandomRGBtoGray
+* RandomAdjustBrightness
+* RandomAdjustContrast
+* RandomAdjustSaturation
+* AdjustGamma
+
+The notebook [Explore augmentations](Explore&#32;augmentations.ipynb) is used to show a batch of the augmented frames.
+
+![](image_export/augmented1.png)
+![](image_export/augmented2.png)
+
+### Training and evaluation
+It is observed that increasing the batch size did ensure much less loss value as well as less fluctuation. Thus, the batch size is increased from 2 to 16. More than that did raise memory issues in the workspace. If you are using local setup, I'd recommend even bigger batch.
