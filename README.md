@@ -181,31 +181,45 @@ Proposals to enhance the balance of object classes:
 * Augment the frames with dense pedestrians and cyclist more, so that we have more variants of these frames.
 * Work more with synthetic data. 
 
-Subset of the training dataset:
+#### Subset of the training dataset:
 
 ![](image_export/train_class_histogram.png)
 
-Subset of the validation dataset:
+#### Subset of the validation dataset:
 
 ![](image_export/val_class_histogram.png)
 
-Subset of the testing dataset:
+#### Subset of the testing dataset:
 
 ![](image_export/test_class_histogram.png)
 
 ### Data Augmentation
 
 To ensure less over-fitting the The Following augmentations are included with their default values.
-* RandomRGBtoGray
-* RandomAdjustBrightness
-* RandomAdjustContrast
-* RandomAdjustSaturation
-* AdjustGamma
+* RandomRGBtoGray: To avoid memorizing objects' color during training.
+* RandomDistortColor: To avoid memorizing objects' color during training.
+* RandomBlackPatches: To train the network on occlusion.
+* RandomAdjustBrightness: To learn in different situations of lighting
+* RandomAdjustContrast: For less sensitivity on image contrast
+* RandomAdjustSaturation: For less sensitivity on color saturation
+* RandomHorizontalFlip: The horizontal flip shall have no effect on the classification problem. (ex: right or left hand driving shall has no effect on classification)
+* RandomCropImage: To have artificially more variations in perspective.
 
 The notebook [Explore augmentations](Explore&#32;augmentations.ipynb) is used to show a batch of the augmented frames.
 
-![](image_export/augmented1.png)
-![](image_export/augmented2.png)
+<p float="left">
+  <img src="image_export/augment1.png" width="300" />
+  <img src="image_export/augment2.png" width="300" /> 
+  <img src="image_export/augment3.png" width="300" />
+  <img src="image_export/augment4.png" width="300" />
+</p>
 
 ### Training and evaluation
-It is observed that increasing the batch size did ensure much less loss value as well as less fluctuation. Thus, the batch size is increased from 2 to 16. More than that did raise memory issues in the workspace. If you are using local setup, I'd recommend even bigger batch.
+It is observed that increasing the batch size did ensure much less loss value as well as less fluctuation compared to the reference training configuration. Thus, the batch size is increased from 2 to 16. Increasing the batch size more did raise memory issues in the workspace. If you are using local setup with more resources, I'd recommend even bigger batch size.
+
+I'm presenting here the results of the second experiment, as it was more successful. As shown the validation loss is only slightly higher than that of training, which is a sign that the model did not over fit the training data. The exported videos are shown below.
+
+![](image_export/TensorBoard_Experiment_2.PNG)
+![](image_export/animation_exp2_1.gif)
+![](image_export/animation_exp2_2.gif)
+![](image_export/animation_exp2_3.gif)
